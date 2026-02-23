@@ -1,11 +1,14 @@
-import React from "react"
+import React from "react";
 
-const MenuItem = ({items}) => {
-return(
-       <div>
-          <h1>{items.itemName}</h1>
-       </div>
-);
-}
+const MenuItem = ({ itemId, itemPrice, itemName, itemDescription }) => {
+  return (
+    <div id={`item-${itemId}`} className="menu-item">
+      <h1>{itemName}</h1>
+      <p>{itemDescription}</p>
+      <span>${itemPrice}</span>
+      <button>Add to Cart</button>
+    </div>
+  );
+};
 
 export default MenuItem;
