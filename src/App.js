@@ -1,69 +1,53 @@
-import "./App.css"
-import MenuApp from "./components/MenuApp"
-function App() {
-  let menuData = [
-    {
-      menuName: "Dinner",
-      menuItems: [
-        {
-          itemId: 1,
-          itemPrice: "12",
-          itemName: "Lasagne",
-          itemDescription:
-            "Meat and cheese layered between house-made pasta with bell peppers and onions.",
-        },
-        {
-          itemId: 2,
-          itemPrice: "10",
-          itemName: "Cheese Ravioli",
-          itemDescription: "Cheese-filled ravioli served with house red sauce.",
-        },
-        {
-          itemId: 3,
-          itemPrice: "14",
-          itemName: "Chicken Parmesan",
-          itemDescription:
-            "Breaded chicken topped with marinara sauce and lots of cheese served over house made spaghetti.",
-        },
-      ],
-    },
-    {
-      menuName: "Dessert",
-      menuItems: [
-        {
-          itemId: 45,
-          itemPrice: "10",
-          itemName: "Chocolate Lava Cake",
-          itemDescription: "Dark chocolate molten lava cake. Serves 2-3.",
-        },
-        {
-          itemId: 47,
-          itemPrice: "8",
-          itemName: "Tiramisu",
-          itemDescription:
-            "Layers of espresso-soaked ladyfingers and marscarpone cream topped with cocoa and espresso powder.",
-        },
-        {
-          itemId: 49,
-          itemPrice: "5",
-          itemName: "Cannolis",
-          itemDescription:
-            "Three flaky pastries enclosing a rich, ricotta filling dotted with decadent chocolate chips.",
-        },
-        {
-          itemId: 50,
-          itemPrice: "5",
-          itemName: "Cappuccino",
-          itemDescription: "Steamed milk with two ristretto shots of espresso.",
-        },
-      ],
-    },
-  ]
-  return (
-    <div className="App">
-        <MenuApp data={menuData} />
-    </div>
-  )
-}
+import React, { useState } from 'react';
+import RepetitionExercise from './components/RepetitionExercise';
+import DurationExercise from './components/DurationExercise';
 
+function App() {
+  const [selectedExercise, setSelectedExercise] = useState(null);
+
+  const exercises = [
+    { name: "Push Ups", type: "repetition" },
+    { name: "Running", type: "duration" },
+    { name: "Plank", type: "duration" },
+    { name: "Sit Ups", type: "repetition" }
+  ];
+
+  let content;
+
+    if (selectedExercise) {
+      if (selectedExercise.type === "repetition") {
+      content = (
+        <RepetitionExercise 
+          name={selectedExercise.name} 
+          returnToMenu={() => setSelectedExercise(null)} 
+        />
+      );
+      } else {
+      content = (
+        <DurationExercise 
+          name={selectedExercise.name} 
+          returnToMenu={() => setSelectedExercise(null)} 
+        />
+      );
+    }
+  } else {
+    content = (
+      <div style={{ textAlign: "center" }}>
+        <h1>Go Exercise!</h1>
+         <p>Select an exercise:</p>
+        {exercises.map((ex) => (
+          <button 
+            key={ex.name} 
+            style={{ display: "block", margin: "10px auto", padding: "10px 20px", fontSize: "1.1rem" }}
+            onClick={() => setSelectedExercise(ex)}
+          >
+          {ex.name}
+          </button>
+        ))}
+      </div>
+    );
+  }
+
+  return <div className="App">{content}</div>;
+}
 export default App;
